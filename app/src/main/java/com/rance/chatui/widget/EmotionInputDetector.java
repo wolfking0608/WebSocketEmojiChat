@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -24,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.rance.chatui.R;
 import com.rance.chatui.bean.HistoryBean;
 import com.rance.chatui.enity.MessageInfo;
@@ -58,6 +61,7 @@ public class EmotionInputDetector {
     private PopupWindowFactory mVoicePop;
     private TextView mPopVoiceText;
    private  WebSocketServiceConnectManager mConnectManager;
+    CoordinatorLayout mCoordinator;
     private EmotionInputDetector() {
     }
 
@@ -75,6 +79,11 @@ public class EmotionInputDetector {
     }
     public EmotionInputDetector bindToConnectManager(WebSocketServiceConnectManager manager) {
         mConnectManager=manager;
+        return this;
+    }
+
+    public EmotionInputDetector bindCoordinator(CoordinatorLayout coordinator) {
+        mCoordinator= coordinator;
         return this;
     }
     public EmotionInputDetector bindToEditText(EditText editText) {
@@ -197,6 +206,9 @@ public class EmotionInputDetector {
                     Toast.makeText(mSendButton.getContext(), "发送内容不能为空!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //TODO 隐藏软键盘
+                //todo 判断是否被禁言 顶部带T 底部不带T
+                Snackbar.make(mCoordinator, "被禁言了", Snackbar.LENGTH_SHORT).show();
                 mAddButton.setVisibility(View.VISIBLE);
                 mSendButton.setVisibility(View.VISIBLE);
                 MessageInfo messageInfo = new MessageInfo();
@@ -446,4 +458,6 @@ public class EmotionInputDetector {
         Log.e(TAG, "sendText:---------- "+command.toJSONString() );
         mConnectManager.sendText(command.toJSONString());
     }
+
+
 }

@@ -13,10 +13,6 @@ import com.rance.chatui.adapter.holder.ChatSendViewHolder;
 import com.rance.chatui.enity.MessageInfo;
 import com.rance.chatui.util.Constants;
 
-/**
- * 作者：Rance on 2016/11/29 10:46
- * 邮箱：rance935@163.com
- */
 public class ChatAdapter extends RecyclerArrayAdapter<MessageInfo> {
 
     private onItemClickListener onItemClickListener;

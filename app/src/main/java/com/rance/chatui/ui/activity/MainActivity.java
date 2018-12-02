@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
+import com.androidadvance.topsnackbar.TSnackbar;
 import com.jude.easyrecyclerview.EasyRecyclerView;
 import com.rance.chatui.R;
 import com.rance.chatui.adapter.ChatAdapter;
@@ -55,7 +58,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-/**
+/**  remove(int position) 单独删除其中的一条数据
  * 主聊天界面
  */
 public class MainActivity extends AbsWebSocketActivity {
@@ -81,6 +84,8 @@ public class MainActivity extends AbsWebSocketActivity {
     NoScrollViewPager viewpager;
     @BindView(R.id.emotion_layout)
     RelativeLayout emotionLayout;
+    @BindView(R.id.coordinator)
+    CoordinatorLayout coordinator;
 
     private EmotionInputDetector mDetector;
     private ArrayList<Fragment> fragments;
@@ -128,6 +133,7 @@ public class MainActivity extends AbsWebSocketActivity {
                 .bindToEmotionButton(emotionButton)
                 .bindToAddButton(emotionAdd)
                 .bindToSendButton(emotionSend)
+                .bindCoordinator(coordinator)
 //                .bindToVoiceButton(emotionVoice)
                 .bindToVoiceText(voiceText)
                 .bindToConnectManager(mConnectManager)
@@ -441,6 +447,7 @@ public class MainActivity extends AbsWebSocketActivity {
     @Override
     public void onDisconnected() {
         super.onDisconnected();
+        TSnackbar.make(coordinator, "我是普通的Snackbar", TSnackbar.LENGTH_SHORT).show();
         downTimer.cancel();
         downTimer.start();
     }
@@ -457,5 +464,4 @@ public class MainActivity extends AbsWebSocketActivity {
         downTimer.cancel();
         downTimer.start();
     }
-
 }

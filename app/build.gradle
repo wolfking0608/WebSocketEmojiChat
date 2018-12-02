@@ -33,4 +33,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.33'
     implementation project(':websocketlib')
     implementation "com.android.support:support-emoji-bundled:27.1.1"
+    implementation 'com.androidadvance:topsnackbar:1.1.1'
 }
